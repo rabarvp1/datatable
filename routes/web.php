@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Snawbar\DataTable\Services\Column;
@@ -16,7 +17,7 @@ Route::post('/datatable/columns', function (Request $request) {
 
     DB::table('datatable_columns')
         ->where('datatable', $request->tableId)
-        ->where('user_id', auth()->id())
+        ->where('user_id', Auth::id())
         ->delete();
 
     $instance = new $request->className($request);
@@ -28,7 +29,7 @@ Route::post('/datatable/columns', function (Request $request) {
         ->each(fn ($column) => DB::table('datatable_columns')->updateOrInsert([
             'datatable' => $request->tableId,
             'column' => $column->getData(),
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
         ]));
 
     return response()->json([

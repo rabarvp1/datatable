@@ -7,6 +7,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Fluent;
 use Snawbar\DataTable\Services\Column;
@@ -243,7 +244,7 @@ abstract class DataTable
         return str_replace('-', '_', $this->tableId());
     }
 
-    public function totalRecords(int|Builder $totalRecords): self
+    public function totalRecords($totalRecords): self
     {
         if ($this->request->hasAny(['print', 'excel'])) {
             return $this;
@@ -265,7 +266,7 @@ abstract class DataTable
     {
         return DB::table('datatable_columns')
             ->where('datatable', $this->jsSafeTableId())
-            ->where('user_id', auth()->id())
+            ->where('user_id', Auth::id())
             ->pluck('column')
             ->toArray();
     }
