@@ -35,4 +35,4 @@ Route::post('/datatable/columns', function (Request $request) {
     return response()->json([
         'message' => 'Columns updated successfully',
     ]);
-})->middleware('auth')->name('datatable.columns');
+})->middleware(['web', 'auth'])->name('datatable.columns');
