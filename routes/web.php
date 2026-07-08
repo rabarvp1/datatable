@@ -65,3 +65,18 @@ Route::post('/datatable/reorder', function (Request $request) {
         'message' => 'Column order saved successfully',
     ]);
 })->middleware(['web', 'auth'])->name('datatable.reorder');
+
+Route::post('/datatable/reorder/reset', function (Request $request) {
+    $request->validate([
+        'tableId' => 'required|string',
+    ]);
+
+    DB::table('datatable_column_orders')
+        ->where('datatable', $request->tableId)
+        ->where('user_id', Auth::id())
+        ->delete();
+
+    return response()->json([
+        'message' => 'Column order reset successfully',
+    ]);
+})->middleware(['web', 'auth'])->name('datatable.reorder.reset');

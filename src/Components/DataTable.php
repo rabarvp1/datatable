@@ -223,6 +223,7 @@ abstract class DataTable
             'reorderModalId' => $this->reorderModalId(),
             'reorderModalHtml' => $this->reorderModalHtml(),
             'buttonReorderFunction' => $this->buttonReorderFunction(),
+            'buttonResetReorderFunction' => $this->buttonResetReorderFunction(),
             'exportTitle' => $this->exportTitle(),
             'className' => static::class,
         ])->render();
@@ -615,6 +616,11 @@ abstract class DataTable
         return sprintf('%s_reorder_columns()', $this->jsSafeTableId());
     }
 
+    private function buttonResetReorderFunction(): string
+    {
+        return sprintf('%s_reset_reorder_columns()', $this->jsSafeTableId());
+    }
+
     private function reorderModalId(): string
     {
         return sprintf('%s_reorder_modal', $this->jsSafeTableId());
@@ -635,6 +641,7 @@ abstract class DataTable
 
         return view('snawbar-datatable::modal.reorder', [
             'buttonReorderFunction' => $this->buttonReorderFunction(),
+            'buttonResetReorderFunction' => $this->buttonResetReorderFunction(),
             'reorderModalId' => $this->reorderModalId(),
             'columns' => $columns,
         ])->render();

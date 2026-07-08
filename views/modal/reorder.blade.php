@@ -20,6 +20,7 @@
                 </form>
             </div>
             <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-warning mr-1" id="{{ $reorderModalId }}_reset" onclick="{{ $buttonResetReorderFunction }}">{{ __('snawbar-datatable::datatable.reset') ?? 'Reset' }}</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('snawbar-datatable::datatable.daxstn') }}</button>
                 <button type="button" class="btn btn-primary mr-1" id="{{ $reorderModalId }}_save" onclick="{{ $buttonReorderFunction }}">{{ __('snawbar-datatable::datatable.save') }}</button>
             </div>

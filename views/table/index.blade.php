@@ -198,6 +198,28 @@ function {{ $buttonReorderFunction }} {
     });
 }
 
+function {{ $buttonResetReorderFunction }} {
+    const btnText = $('#{{ $reorderModalId }}_reset').text();
+
+    $.ajax({
+        type: 'POST',
+        url: '{{ route("datatable.reorder.reset") }}',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            tableId: @js($jsSafeTableId)
+        },
+        beforeSend: function() {
+            $('#{{ $reorderModalId }}_reset').html("{{ __('snawbar-datatable::datatable.chawarwanba') }}").prop("disabled", true);
+        },
+        success(response) {
+            window.location.reload();
+        },
+        complete: function() {
+            $('#{{ $reorderModalId }}_reset').html(btnText).prop("disabled", false);
+        },
+    });
+}
+
 function getCheckedColumns() {
     return $('#{{ $exportableModalId }} input[type="checkbox"]:checked').map((_, el) => el.value).get();
 }
