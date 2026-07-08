@@ -17,6 +17,7 @@ return [
     "tanha am xanana bka ba excel" => "تەنها ئەم خانانە بکە بە ئێکسڵ",
     "tanha am xanana chap bka" => "تەنها ئەم خانانە چاپ بکە",
     "save" => "خەزنکردن",
+    "daxstn" => "داخستن",
     "reorder-columns" => "ڕیزبەندکردنی خانەکان",
     "reset" => "گەڕاندنەوە",
     "export-columns" => "هەناردەکردن / خانەکان",

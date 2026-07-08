@@ -20,8 +20,8 @@
                 </form>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="badge badge-light border text-muted py-2 px-3" style="cursor:pointer;" id="{{ $reorderModalId }}_reset" onclick="{{ $buttonResetReorderFunction }}">
-                    <i class="fas fa-undo mr-1"></i> {{ __('snawbar-datatable::datatable.reset') ?? 'Reset' }}
+                <button type="button" class="badge badge-light border text-muted py-2 px-3" style="cursor:pointer;" id="{{ $reorderModalId }}_reset" onclick="{{ $buttonResetReorderFunction }}" title="{{ __('snawbar-datatable::datatable.reset') ?? 'Reset' }}">
+                    <i class="fas fa-undo"></i>
                 </button>
                 <div>
                     <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">{{ __('snawbar-datatable::datatable.daxstn') }}</button>
