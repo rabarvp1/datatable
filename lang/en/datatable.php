@@ -18,4 +18,6 @@ return [
     "tanha am xanana chap bka" => "Print the Selected Fields",
     "save" => "Save",
     "daxstn" => "Close",
+    "reorder-columns" => "Reorder Columns",
+    "reset" => "Reset",
 ];

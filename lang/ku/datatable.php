@@ -18,4 +18,6 @@ return [
     "tanha am xanana chap bka" => "تەنها ئەم خانانە چاپ بکە",
     "save" => "خەزنکردن",
     "daxstn" => "داخستن",
+    "reorder-columns" => "ڕیزبەندکردنی خانەکان",
+    "reset" => "گەڕاندنەوە",
 ];

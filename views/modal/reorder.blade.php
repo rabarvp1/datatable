@@ -19,10 +19,14 @@
                     </ul>
                 </form>
             </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-warning mr-1" id="{{ $reorderModalId }}_reset" onclick="{{ $buttonResetReorderFunction }}">{{ __('snawbar-datatable::datatable.reset') ?? 'Reset' }}</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('snawbar-datatable::datatable.daxstn') }}</button>
-                <button type="button" class="btn btn-primary mr-1" id="{{ $reorderModalId }}_save" onclick="{{ $buttonReorderFunction }}">{{ __('snawbar-datatable::datatable.save') }}</button>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="badge badge-light border text-muted py-2 px-3" style="cursor:pointer;" id="{{ $reorderModalId }}_reset" onclick="{{ $buttonResetReorderFunction }}">
+                    <i class="fas fa-undo mr-1"></i> {{ __('snawbar-datatable::datatable.reset') ?? 'Reset' }}
+                </button>
+                <div>
+                    <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">{{ __('snawbar-datatable::datatable.daxstn') }}</button>
+                    <button type="button" class="btn btn-primary" id="{{ $reorderModalId }}_save" onclick="{{ $buttonReorderFunction }}">{{ __('snawbar-datatable::datatable.save') }}</button>
+                </div>
             </div>
         </div>
     </div>

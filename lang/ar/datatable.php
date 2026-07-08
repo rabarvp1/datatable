@@ -18,4 +18,6 @@ return [
     "tanha am xanana chap bka" => "طباعة الحقول المحددة",
     "save" => "حفظ",
     "daxstn" => "إغلاق",
+    "reorder-columns" => "ترتيب الحقول",
+    "reset" => "إعادة ضبط",
 ];
