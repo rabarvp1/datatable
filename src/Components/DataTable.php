@@ -203,7 +203,7 @@ abstract class DataTable
             'filterContainer' => $this->filterContainer(),
             'buttonPrintFunction' => $this->buttonPrintFunction(),
             'buttonPrintWithProductsFunction' => $this->buttonPrintWithProductsFunction(),
-            'hasSubitems' => method_exists($this, 'attachPrintSubitems'),
+            'hasSubitems' => (new \ReflectionMethod($this, 'attachPrintSubitems'))->getDeclaringClass()->getName() !== self::class,
             'buttonExcelFunction' => $this->buttonExcelFunction(),
             'buttonColumnVisibilityFunction' => $this->buttonColumnVisibilityFunction(),
             'exportableModalId' => $this->exportableModalId(),
@@ -226,7 +226,7 @@ abstract class DataTable
             'columnModalId' => $this->columnModalId(),
             'buttonPrintFunction' => $this->buttonPrintFunction(),
             'buttonPrintWithProductsFunction' => $this->buttonPrintWithProductsFunction(),
-            'hasSubitems' => method_exists($this, 'attachPrintSubitems'),
+            'hasSubitems' => (new \ReflectionMethod($this, 'attachPrintSubitems'))->getDeclaringClass()->getName() !== self::class,
             'buttonExcelFunction' => $this->buttonExcelFunction(),
         ])->render();
     }
