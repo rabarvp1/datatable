@@ -85,7 +85,7 @@ abstract class DataTable
 
     public function isOrderable(): bool
     {
-        return FALSE;
+        return TRUE;
     }
 
     public function defaultOrderBy(): array

@@ -45,7 +45,15 @@ class Column
 
     public function getOrderable(): bool
     {
-        return $this->attributes['orderable'] ?? TRUE;
+        if (isset($this->attributes['orderable'])) {
+            return $this->attributes['orderable'];
+        }
+
+        if (in_array($this->getData(), ['actions', 'action'])) {
+            return FALSE;
+        }
+
+        return TRUE;
     }
 
     public function exportable($flag = TRUE): self
