@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
         pageLength: {{ $length }},
         ordering: {{ $isOrderable ? 'true' : 'false' }},
         order: order,
-        colReorder: {{ $isColReorderable ? 'true' : 'false' }},
         language: {
             oPaginate: {
                 sPrevious: "{{ __('snawbar-datatable::datatable.previous') }}",

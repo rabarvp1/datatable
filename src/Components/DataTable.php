@@ -491,8 +491,9 @@ abstract class DataTable
             $columns = explode(',', $columns);
         }
 
-        if (filled($columnIndex)) {
-            return $columns[$columnIndex]['data'] ?? NULL;
+        if (filled($columnIndex) && isset($columns[$columnIndex])) {
+            $col = $columns[$columnIndex];
+            return !empty($col['name']) ? $col['name'] : ($col['data'] ?? NULL);
         }
 
         return in_array($columnName, $columns) ? $columnName : NULL;
