@@ -11,7 +11,7 @@
         @if(isset($hasSubitems) && $hasSubitems)
         <li>
             <a class="dropdown-item datatable-button-export" data-toggle="modal" href="#{{ $exportableModalId }}" data-button-text="{{ __('snawbar-datatable::datatable.print') }}" data-function-export="{{ $buttonPrintWithProductsFunction }}" data-modal-header-text="{{ __('snawbar-datatable::datatable.tanha am xanana chap bka') }}">
-                {{ __('snawbar-datatable::datatable.print') }} ({{ __('all.ba kallawa') ?? 'Products' }})
+                {{ __('snawbar-datatable::datatable.print') }} ({{ __('all.kalla ') ?? 'Products' }})
             </a>
         </li>
         @endif
