@@ -218,6 +218,7 @@ abstract class DataTable
             'buttonColumnVisibilityFunction' => $this->buttonColumnVisibilityFunction(),
             'exportableModalId' => $this->exportableModalId(),
             'exportableModalHtml' => $this->exportableModalHtml(),
+            'columnModalId' => $this->columnModalId(),
             'columnModalHtml' => $this->columnModalHtml(),
             'reorderModalId' => $this->reorderModalId(),
             'reorderModalHtml' => $this->reorderModalHtml(),
