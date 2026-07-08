@@ -84,6 +84,9 @@
 </head>
 
 <body>
+    @if(isset($printHeader) && $printHeader)
+        {!! $printHeader !!}
+    @endif
     <fieldset class="fieldset-top-border">
         <legend>{{ $title }}</legend>
     </fieldset>
@@ -147,6 +150,10 @@
         </tfoot>
 
     </table>
+
+    @if(isset($printFooter) && $printFooter)
+        {!! $printFooter !!}
+    @endif
 
     <script>
         window.onload = function() {

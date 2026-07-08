@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
         processing: true,
         bLengthChange: false,
         searching: false,
-        pageLength: '{{ $length }}',
-        ordering: '{{ $isOrderable }}',
+        pageLength: {{ $length }},
+        ordering: {{ $isOrderable ? 'true' : 'false' }},
         order: order,
         language: {
             oPaginate: {
@@ -116,6 +116,18 @@ function {{ $buttonPrintFunction }} {
 
     window.open(url, '_blank', 'width=4000,height=4000');
 }
+
+@if(isset($hasSubitems) && $hasSubitems)
+function {{ $buttonPrintWithProductsFunction }} {
+    const url = window["{{ $jsSafeTableId }}_getTableCurrentUrl"]({
+        columns: getCheckedColumns().join(','),
+        print: 1,
+        with_products: 1,
+    });
+
+    window.open(url, '_blank', 'width=4000,height=4000');
+}
+@endif
 
 function {{ $buttonExcelFunction }} {
     const url = window["{{ $jsSafeTableId }}_getTableCurrentUrl"]({

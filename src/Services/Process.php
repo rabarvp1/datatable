@@ -70,6 +70,8 @@ class Process
             'headers' => $headers->values()->all(),
             'title' => $datatable->exportTitle(),
             'totals' => (array) $response->totals,
+            'printHeader' => method_exists($datatable, 'printHeader') ? $datatable->printHeader() : null,
+            'printFooter' => method_exists($datatable, 'printFooter') ? $datatable->printFooter() : null,
         ]);
     }
 

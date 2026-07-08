@@ -8,6 +8,13 @@
                 {{ __('snawbar-datatable::datatable.print') }}
             </a>
         </li>
+        @if(isset($hasSubitems) && $hasSubitems)
+        <li>
+            <a class="dropdown-item datatable-button-export" data-toggle="modal" href="#{{ $exportableModalId }}" data-button-text="{{ __('snawbar-datatable::datatable.print') }}" data-function-export="{{ $buttonPrintWithProductsFunction }}" data-modal-header-text="{{ __('snawbar-datatable::datatable.tanha am xanana chap bka') }}">
+                {{ __('snawbar-datatable::datatable.print') }} ({{ __('all.kala') ?? 'Products' }})
+            </a>
+        </li>
+        @endif
         <li>
             <a class="dropdown-item datatable-button-export" data-toggle="modal" href="#{{ $exportableModalId }}" data-button-text="{{ __('snawbar-datatable::datatable.excel') }}" data-function-export="{{ $buttonExcelFunction }}" data-modal-header-text="{{ __('snawbar-datatable::datatable.tanha am xanana bka ba excel') }}">
                 {{ __('snawbar-datatable::datatable.excel') }}

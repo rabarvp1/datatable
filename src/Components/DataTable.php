@@ -68,6 +68,16 @@ abstract class DataTable
         return NULL;
     }
 
+    public function printHeader(): ?string
+    {
+        return NULL;
+    }
+
+    public function printFooter(): ?string
+    {
+        return NULL;
+    }
+
     public function filterContainer(): ?string
     {
         return NULL;
@@ -192,6 +202,8 @@ abstract class DataTable
             'loadTotatableFunction' => $this->loadTotatableFunction(),
             'filterContainer' => $this->filterContainer(),
             'buttonPrintFunction' => $this->buttonPrintFunction(),
+            'buttonPrintWithProductsFunction' => $this->buttonPrintWithProductsFunction(),
+            'hasSubitems' => method_exists($this, 'attachPrintSubitems'),
             'buttonExcelFunction' => $this->buttonExcelFunction(),
             'buttonColumnVisibilityFunction' => $this->buttonColumnVisibilityFunction(),
             'exportableModalId' => $this->exportableModalId(),
@@ -213,6 +225,8 @@ abstract class DataTable
             'exportableModalId' => $this->exportableModalId(),
             'columnModalId' => $this->columnModalId(),
             'buttonPrintFunction' => $this->buttonPrintFunction(),
+            'buttonPrintWithProductsFunction' => $this->buttonPrintWithProductsFunction(),
+            'hasSubitems' => method_exists($this, 'attachPrintSubitems'),
             'buttonExcelFunction' => $this->buttonExcelFunction(),
         ])->render();
     }
@@ -286,7 +300,7 @@ abstract class DataTable
                 $row->iteration = $start + $index + 1;
             }
 
-            if ($this->request->has('print') && $subItems = $this->attachPrintSubitems($row)) {
+            if ($this->request->has('print') && $this->request->has('with_products') && $subItems = $this->attachPrintSubitems($row)) {
                 $row->subItems = collect($subItems);
             }
 
@@ -454,12 +468,17 @@ abstract class DataTable
         return filled($this->request->input('totalable'));
     }
 
-    private function buttonPrintFunction(): string
+    public function buttonPrintFunction(): string
     {
         return sprintf('%s_print()', $this->jsSafeTableId());
     }
 
-    private function buttonExcelFunction(): string
+    public function buttonPrintWithProductsFunction(): string
+    {
+        return sprintf('%s_print_with_products()', $this->jsSafeTableId());
+    }
+
+    public function buttonExcelFunction(): string
     {
         return sprintf('%s_excel()', $this->jsSafeTableId());
     }
