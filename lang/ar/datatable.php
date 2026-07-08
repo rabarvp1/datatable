@@ -17,7 +17,7 @@ return [
     "tanha am xanana bka ba excel" => "تحويل الحقول المحددة إلى ملف إكسل",
     "tanha am xanana chap bka" => "طباعة الحقول المحددة",
     "save" => "حفظ",
-    "daxstn" => "إغلاق",
     "reorder-columns" => "ترتيب الحقول",
     "reset" => "إعادة ضبط",
+    "export-columns" => "تصدير / الحقول",
 ];

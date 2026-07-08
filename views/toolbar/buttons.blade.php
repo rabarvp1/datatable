@@ -1,6 +1,6 @@
 <div class="btn-group mb-2">
     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-        Export / Columns
+        {{ __('snawbar-datatable::datatable.export-columns') ?? 'Export / Columns' }}
     </button>
     <ul class="dropdown-menu">
         <li>
