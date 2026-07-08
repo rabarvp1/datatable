@@ -33,6 +33,8 @@ abstract class DataTable
 
     private array $hiddenColumns = [];
 
+    private array $columnOrders = [];
+
     private int $totalRecords = 0;
 
     public function __construct(Request $request)
@@ -42,6 +44,8 @@ abstract class DataTable
         $this->setupColumns();
 
         $this->hiddenColumns = $this->getHiddenColumns();
+
+        $this->columnOrders = $this->getColumnOrders();
 
         $this->processColumnInstance = $this->processColumnInstance();
 
@@ -214,8 +218,10 @@ abstract class DataTable
             'buttonColumnVisibilityFunction' => $this->buttonColumnVisibilityFunction(),
             'exportableModalId' => $this->exportableModalId(),
             'exportableModalHtml' => $this->exportableModalHtml(),
-            'columnModalId' => $this->columnModalId(),
             'columnModalHtml' => $this->columnModalHtml(),
+            'reorderModalId' => $this->reorderModalId(),
+            'reorderModalHtml' => $this->reorderModalHtml(),
+            'buttonReorderFunction' => $this->buttonReorderFunction(),
             'exportTitle' => $this->exportTitle(),
             'className' => static::class,
         ])->render();
@@ -230,6 +236,7 @@ abstract class DataTable
         return view('snawbar-datatable::toolbar.buttons', [
             'exportableModalId' => $this->exportableModalId(),
             'columnModalId' => $this->columnModalId(),
+            'reorderModalId' => $this->reorderModalId(),
             'buttonPrintFunction' => $this->buttonPrintFunction(),
             'buttonPrintWithProductsFunction' => $this->buttonPrintWithProductsFunction(),
             'hasSubitems' => (new \ReflectionMethod($this, 'attachPrintSubitems'))->getDeclaringClass()->getName() !== self::class,
@@ -279,7 +286,36 @@ abstract class DataTable
 
     private function processColumnInstance(): Collection
     {
-        return collect($this->columns())->map(fn ($column) => $column instanceof Column ? $column : Column::make($column));
+        $columns = collect($this->columns())->map(fn ($column) => $column instanceof Column ? $column : Column::make($column));
+        
+        if (!empty($this->columnOrders)) {
+            $orderedColumns = collect();
+            foreach ($this->columnOrders as $colName) {
+                $col = $columns->first(fn($c) => $c->getData() === $colName);
+                if ($col) {
+                    $orderedColumns->push($col);
+                }
+            }
+            // Add remaining columns that were not in the order table
+            $columns->each(function($col) use ($orderedColumns) {
+                if (!$orderedColumns->contains(fn($c) => $c->getData() === $col->getData())) {
+                    $orderedColumns->push($col);
+                }
+            });
+            return $orderedColumns;
+        }
+
+        return $columns;
+    }
+
+    private function getColumnOrders(): array
+    {
+        return DB::table('datatable_column_orders')
+            ->where('datatable', $this->jsSafeTableId())
+            ->where('user_id', Auth::id())
+            ->orderBy('weight', 'asc')
+            ->pluck('column')
+            ->toArray();
     }
 
     private function getHiddenColumns(): array
@@ -569,6 +605,36 @@ abstract class DataTable
         return view('snawbar-datatable::modal.column', [
             'buttonColumnVisibilityFunction' => $this->buttonColumnVisibilityFunction(),
             'columnModalId' => $this->columnModalId(),
+            'columns' => $columns,
+        ])->render();
+    }
+
+    private function buttonReorderFunction(): string
+    {
+        return sprintf('%s_reorder_columns()', $this->jsSafeTableId());
+    }
+
+    private function reorderModalId(): string
+    {
+        return sprintf('%s_reorder_modal', $this->jsSafeTableId());
+    }
+
+    private function reorderModalHtml(): ?string
+    {
+        if (! $this->hasToolbar()) {
+            return NULL;
+        }
+
+        $columns = $this->processColumnInstance
+            ->filter(fn ($column) => $this->shouldIncludeColumn($column))
+            ->map(fn ($column) => (object) [
+                'data' => $column->getData(),
+                'title' => $column->getTitle(),
+            ]);
+
+        return view('snawbar-datatable::modal.reorder', [
+            'buttonReorderFunction' => $this->buttonReorderFunction(),
+            'reorderModalId' => $this->reorderModalId(),
             'columns' => $columns,
         ])->render();
     }

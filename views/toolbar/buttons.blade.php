@@ -25,5 +25,10 @@
                 {{ __('snawbar-datatable::datatable.toggle-columns') }}
             </a>
         </li>
+        <li>
+            <a class="dropdown-item" data-toggle="modal" href="#{{ $reorderModalId }}">
+                {{ __('snawbar-datatable::datatable.reorder-columns') ?? 'Reorder Columns' }}
+            </a>
+        </li>
     </ul>
 </div>

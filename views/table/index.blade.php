@@ -2,11 +2,16 @@
 
 {{ datatablePrintHtml($exportableModalHtml) }}
 {{ datatablePrintHtml($columnModalHtml) }}
+{{ datatablePrintHtml($reorderModalHtml) }}
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (! $.fn.DataTable) {
         return alert(`Error: DataTable plugin not loaded. Please install it from https://datatables.net`);
+    }
+
+    if ($.fn.sortable) {
+        $(`#{{ $reorderModalId }}_list`).sortable();
     }
 
     const order = {{ datatablePrintHtml(datatableWhen($isOrderable, json_encode([$defaultOrderBy]), '[]')) }};
@@ -161,6 +166,34 @@ function {{ $buttonColumnVisibilityFunction }} {
         },
         complete: function() {
             $('#{{ $columnModalId }}_save').html(btnText).prop("disabled", false);
+        },
+    });
+}
+
+function {{ $buttonReorderFunction }} {
+    const btnText = $('#{{ $reorderModalId }}_save').text();
+    const columns = [];
+    $(`#{{ $reorderModalId }}_list li`).each(function() {
+        columns.push($(this).data('column-name'));
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '{{ route("datatable.reorder") }}',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            tableId: @js($jsSafeTableId),
+            className: @js($className),
+            columns: columns
+        },
+        beforeSend: function() {
+            $('#{{ $reorderModalId }}_save').html("{{ __('snawbar-datatable::datatable.chawarwanba') }}").prop("disabled", true);
+        },
+        success(response) {
+            window.location.reload();
+        },
+        complete: function() {
+            $('#{{ $reorderModalId }}_save').html(btnText).prop("disabled", false);
         },
     });
 }

@@ -36,3 +36,32 @@ Route::post('/datatable/columns', function (Request $request) {
         'message' => 'Columns updated successfully',
     ]);
 })->middleware(['web', 'auth'])->name('datatable.columns');
+
+Route::post('/datatable/reorder', function (Request $request) {
+    $request->validate([
+        'tableId' => 'required|string',
+        'className' => 'required|string',
+        'columns' => 'required|array',
+    ]);
+
+    abort_unless(class_exists($request->className), 404, 'Class not found');
+
+    DB::table('datatable_column_orders')
+        ->where('datatable', $request->tableId)
+        ->where('user_id', Auth::id())
+        ->delete();
+
+    $weight = 0;
+    foreach ($request->columns as $columnDataName) {
+        DB::table('datatable_column_orders')->insert([
+            'datatable' => $request->tableId,
+            'column' => $columnDataName,
+            'weight' => $weight++,
+            'user_id' => Auth::id(),
+        ]);
+    }
+
+    return response()->json([
+        'message' => 'Column order saved successfully',
+    ]);
+})->middleware(['web', 'auth'])->name('datatable.reorder');
