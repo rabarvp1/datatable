@@ -290,9 +290,11 @@ abstract class DataTable
         $start = $this->request->input('start', 0);
         $length = $this->request->input('length', 10);
 
+        $sortClause = $this->buildSortClause();
+
         $rows = $this->builder
             ->when($this->request->ajax(), fn ($query) => $query->skip($start)->take($length))
-            ->when($this->isOrderable(), fn ($query) => $query->reorder()->orderByRaw($this->buildSortClause()))
+            ->when($this->isOrderable() && $sortClause, fn ($query) => $query->reorder()->orderByRaw($sortClause))
             ->get();
 
         $rows->each(function ($row, $index) use ($start) {
@@ -412,13 +414,24 @@ abstract class DataTable
         return $columns->filter(fn ($column) => in_array($column->getData(), $requestColumns));
     }
 
-    private function buildSortClause(): string
+    private function buildSortClause(): ?string
     {
         $columnName = $this->extractSortColumn();
         $direction = mb_strtoupper($this->request->input('order.0.dir', $this->request->dir));
 
         if ($this->shouldUseDefaultSort($columnName, $direction)) {
-            return $this->defaultOrderByString();
+            $clause = $this->defaultOrderByString();
+            $col = explode(' ', $clause)[0] ?? '';
+            
+            if (in_array($col, ['iteration', 'actions', 'action'])) {
+                return null;
+            }
+            
+            return $clause;
+        }
+
+        if (in_array($columnName, ['iteration', 'actions', 'action'])) {
+            return null;
         }
 
         return sprintf('%s %s', $columnName, $direction);
