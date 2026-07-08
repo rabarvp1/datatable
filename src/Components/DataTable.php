@@ -99,7 +99,7 @@ abstract class DataTable
 
     public function defaultOrderBy(): array
     {
-        return [0, 'ASC'];
+        return [];
     }
 
     public function length(): int
@@ -464,6 +464,10 @@ abstract class DataTable
         $direction = mb_strtoupper($this->request->input('order.0.dir', $this->request->dir));
 
         if ($this->shouldUseDefaultSort($columnName, $direction)) {
+            if (empty($this->defaultOrderBy())) {
+                return null;
+            }
+
             $clause = $this->defaultOrderByString();
             $col = explode(' ', $clause)[0] ?? '';
             

@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $(`#{{ $reorderModalId }}_list`).sortable();
     }
 
-    const order = {{ datatablePrintHtml(datatableWhen($isOrderable, json_encode([$defaultOrderBy]), '[]')) }};
+    const order = {{ datatablePrintHtml(datatableWhen($isOrderable, json_encode(empty($defaultOrderBy) ? [] : [$defaultOrderBy]), '[]')) }};
 
     $('#{{ $tableId }}').DataTable({
         deferRender: true,
