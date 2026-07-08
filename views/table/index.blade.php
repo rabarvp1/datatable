@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return alert(`Error: DataTable plugin not loaded. Please install it from https://datatables.net`);
     }
 
-    const order = {{ datatablePrintHtml(datatableWhen($isOrderable, json_encode($defaultOrderBy), '[]')) }};
+    const order = {{ datatablePrintHtml(datatableWhen($isOrderable, json_encode([$defaultOrderBy]), '[]')) }};
 
     $('#{{ $tableId }}').DataTable({
         deferRender: true,

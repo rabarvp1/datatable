@@ -292,7 +292,7 @@ abstract class DataTable
 
         $rows = $this->builder
             ->when($this->request->ajax(), fn ($query) => $query->skip($start)->take($length))
-            ->when($this->isOrderable(), fn ($query) => $query->orderByRaw($this->buildSortClause()))
+            ->when($this->isOrderable(), fn ($query) => $query->reorder()->orderByRaw($this->buildSortClause()))
             ->get();
 
         $rows->each(function ($row, $index) use ($start) {
@@ -460,7 +460,18 @@ abstract class DataTable
 
     private function defaultOrderByString(): string
     {
-        return implode(' ', $this->defaultOrderBy());
+        $defaultOrder = $this->defaultOrderBy();
+        $column = $defaultOrder[0] ?? 0;
+        $direction = $defaultOrder[1] ?? 'ASC';
+
+        if (is_numeric($column)) {
+            $columnData = $this->processColumns->values()->get($column)->data ?? null;
+            if ($columnData) {
+                $column = $columnData;
+            }
+        }
+
+        return sprintf('%s %s', $column, $direction);
     }
 
     private function isTotalable(): bool
