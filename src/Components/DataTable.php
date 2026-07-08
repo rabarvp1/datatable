@@ -88,6 +88,11 @@ abstract class DataTable
         return TRUE;
     }
 
+    public function isColReorderable(): bool
+    {
+        return TRUE;
+    }
+
     public function defaultOrderBy(): array
     {
         return [0, 'ASC'];
@@ -192,6 +197,7 @@ abstract class DataTable
             'jsSafeTableId' => $this->jsSafeTableId(),
             'tableClass' => $this->tableClass(),
             'isOrderable' => $this->isOrderable(),
+            'isColReorderable' => $this->isColReorderable(),
             'defaultOrderBy' => $this->defaultOrderBy(),
             'callbackJs' => $this->callbackJs(),
             'length' => $this->length(),

@@ -71,6 +71,7 @@ class Process
             'title' => $datatable->exportTitle(),
             'totals' => (array) $response->totals,
             'printHeader' => method_exists($datatable, 'printHeader') ? $datatable->printHeader() : null,
+            'printSubHeader' => method_exists($datatable, 'printSubHeader') ? $datatable->printSubHeader() : null,
             'printFooter' => method_exists($datatable, 'printFooter') ? $datatable->printFooter() : null,
         ]);
     }

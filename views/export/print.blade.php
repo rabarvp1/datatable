@@ -90,6 +90,9 @@
     <fieldset class="fieldset-top-border">
         <legend>{{ $title }}</legend>
     </fieldset>
+    @if(isset($printSubHeader) && $printSubHeader)
+        {!! $printSubHeader !!}
+    @endif
     <table class="table table-bordered table-striped table-hover table_caption">
         <thead class="thead-dark">
             <tr>
