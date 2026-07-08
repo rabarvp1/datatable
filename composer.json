@@ -1,5 +1,5 @@
 {
-    "name": "mikailfaruqali/datatable",
+    "name": "rabarvp1/datatable",
     "description": "A powerful Laravel package for building server-side DataTables with custom column builders, easy frontend integration, and comprehensive export functionality.",
     "keywords": [
         "laravel",
@@ -7,12 +7,12 @@
         "database",
         "snawbar"
     ],
-    "homepage": "https://github.com/mikailfaruqali/datatable",
+    "homepage": "https://github.com/rabarvp1/datatable",
     "license": "MIT",
     "authors": [
         {
-            "name": "Snawbar",
-            "email": "alanfaruq85@gmail.com",
+            "name": "Rabar",
+            "email": "rabarvp1@gmail.com",
             "role": "Developer"
         }
     ],
